@@ -7,7 +7,7 @@ CFLAGS		=	-g -std=c++1y -stdlib=libc++ -pipe -fPIC -gdwarf-2 -m64 -mmacosx-versi
 all: main
 
 main: main.cc
-	g++ $(CFLAGS) $(LIB) $(INCLUDE) -ltm -o $@  main.cc
+	g++ $(CFLAGS) $(LIB) $(INCLUDE) -liconv -ltm -framework CoreFoundation -framework Carbon -framework Security -o $@  main.cc
 
 clean:
 	@-rm *.o
