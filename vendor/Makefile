@@ -4,7 +4,11 @@ TMLIBS := textmate/build/Frameworks/parse/libparse.a \
 				textmate/build/Frameworks/scope/libscope.a \
 				textmate/build/Frameworks/bundles/libbundles.a \
 				textmate/build/Frameworks/regexp/libregexp.a \
-				textmate/build/Frameworks/cf/libcf.a 
+				textmate/build/Frameworks/cf/libcf.a \
+				textmate/build/Frameworks/io/libio.a \
+				textmate/build/vendor/Onigmo/libOnigmo.a \
+				textmate/build/Frameworks/OakSystem/libOakSystem.a \
+				textmate/build/Frameworks/crash/libcrash.a
 
 .PHONY: all
 all: lib/libtm.a
@@ -22,12 +26,13 @@ lib:
 	@mkdir lib
 
 lib/libtm.a: $(TMLIBS) | lib
+	@-rm lib/*.a
 	@for lib in $(TMLIBS); do \
 		cp $$lib lib; \
 		(cd lib; ar -x `basename $$lib`); \
 		(cd lib; rm `basename $$lib`); \
+		(cd lib; ar -qcs libtm.a *o); \
 	done
-	@(cd lib; ar -cqs libtm.a *.o)
 	@-rm lib/*.o
 	
 
